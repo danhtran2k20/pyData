@@ -3,92 +3,107 @@ import turtle
 import math
 
 
-def turtleFractal(turtle, order, size):
-    if order == 0:
-        turtle.forward(size)
-    else:
-        for angle in [60, -120, 60, 0]:
-            turtleFractal(turtle, order - 1, size / 3)
-            turtle.left(angle)
-
-
-def turtleSnowflake(turtle, order, size):
-    if order == 0:
-        for angle in [60, -120, -120]:
-            turtle.left(angle)
-            turtleFractal(turtle, 0, size)
-    else:
-        for angle in [60, -120, -120]:
-            turtle.left(angle)
-            turtleFractal(turtle, order, size / 3)
-
-
 def turtleFracLine(turtle, order, size):
     if order == 0:
         turtle.forward(size)
     else:
-        for angle in rotateLineAngle:
-            turtleFracLine(turtle, order - 1, size * ratio_alpha)
+        for index, angle in enumerate(rotateLineAngle):
+            if index == 0 or index == len(rotateLineAngle) - 1:
+                turtleFracLine(turtle, order - 1, size * ratio_line)
+            else:
+                turtleFracLine(turtle, order - 1, size * ratio_frac)
             turtle.left(angle)
 
 
-alpha, beta, direction = None, None, ""
-# input
-(order, size, direction, polygon) = (9, 400, "", 4)
-alpha = 5
-# beta = 60
+# input, change only inside this
+inputFractal = {
+    # polygon size and degree
+    "size": 200,
+    "polygonSide": 5,
+    # Fractal input
+    "order": 6,
+    "direction": "down",
+    "ratioFracLine": 2,  # s2 = s1 * ratioFracLine
+    "alpha": 75,
+    # animation on or off
+    "animation": False,
+    "animationSpeed": 0,
+}
+print("inputFractal:", inputFractal)
+# Unpacking dict to var name by key
+inputName = [
+    "size",
+    "polygonSide",
+    "order",
+    "direction",
+    "ratioFracLine",
+    "alpha",
+    "animation",
+    "animationSpeed",
+]
+(
+    size,
+    polygonSide,
+    order,
+    direction,
+    ratioFracLine,
+    alpha,
+    animation,
+    animationSpeed,
+) = (inputFractal[i] for i in inputName)
+
 # angle for polygon
-polyAngle = 180 * (polygon - 2) / polygon
+polyAngle = 180 * (polygonSide - 2) / polygonSide
 polyComAngle = 180 - polyAngle
 polyTurtleAngle = []
-for i in range(polygon):
+for i in range(polygonSide):
     polyTurtleAngle.append(polyComAngle)
-polyTurtleAngle[polygon - 1] = 0
+polyTurtleAngle[polygonSide - 1] = 0
 
-# turtle start position
-preMove = size / (2 * round(math.cos(math.radians(polyAngle / 2)), 4))
+# turtle start position base on polygon angle
+cos_polyAngle = math.cos(math.radians(polyAngle / 2))
+preMove = size / (2 * round(cos_polyAngle, 2))
 preAngle = 180 - polyAngle / 2
 # angle for fractal
-if alpha:
-    beta = 90 - alpha
-if beta:
-    alpha = 90 - beta
-rotateLineAngle = [beta, -180 + 2 * alpha, beta, 0]
-if direction.lower() == "domyWin":
+rotateLineAngle = [alpha, -2 * alpha, alpha, 0]
+if direction.lower() == "down":
     rotateLineAngle = [-x for x in rotateLineAngle]
 
 
-# calculate ratio
-roundNum = 4
-ratio_alpha = round(1 / (2 * (1 + math.sin(math.radians(alpha)))), roundNum)
-ratio_beta = round(1 / (2 * (1 + math.cos(math.radians(beta)))), roundNum)
+# calculate ratio for turtle move
+# s1 + prj_s2     = size /2
+# s1 + s2*cos_a   = s/2
+# s1 + s1*cos_a*k = s/2
+# k = (1 + r*cos_a)
+# s1  = s /(2k)
+# s2 = rs1 = s *(r/(2k))
 
+cos_alpha = math.cos(math.radians(alpha))
+temp_ratio = 1 + round(ratioFracLine * cos_alpha, 2)
+ratio_line = 1 / (2 * temp_ratio)
+ratio_frac = ratioFracLine * ratio_line
 
 # Setup interface
 myWin = turtle.Screen()
-alex = turtle.Turtle(visible=False)
-# alex.speed(0)
+if not animation:
+    alex = turtle.Turtle(visible=False)
+else:
+    alex = turtle.Turtle()
+    alex.speed(animationSpeed)
+
 # pre position for center polygon
+alex.stamp()
 alex.penup()
 alex.right(preAngle)
 alex.forward(preMove)
 alex.left(preAngle)
 alex.pendown()
-myWin.tracer(False)
-
-# draw Fractal with turtle
-# turtleFractal(alex, 0, 300)
-# turtleSnowflake(alex, 2, 600)
-
-# more generalization
-
-
-# turtleFracLine(alex, order, size)
-# more generalization
-
+alex.stamp()
+if not animation:
+    myWin.tracer(False)
 for angle in polyTurtleAngle:
     turtleFracLine(alex, order, size)
-    # alex.forward(size)
     alex.left(angle)
-myWin.tracer(True)
+if not animation:
+    myWin.tracer(True)
 myWin.mainloop()

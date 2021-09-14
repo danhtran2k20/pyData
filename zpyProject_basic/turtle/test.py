@@ -17,5 +17,6 @@ def draw_sierpinski(length,depth):
 
 window = turtle.Screen()
 t = turtle.Turtle()
+t.speed(0)
 draw_sierpinski(500,2)
 window.exitonclick()

@@ -49,10 +49,13 @@ def add_time(start, duration, startDay=False):
 
 
 def convert_Time(timeInput, day=False):
-    tempInput1 = timeInput.split()
-    hour, minute = (int(x) for x in tempInput1[0].split(":"))
-    if len(tempInput1) == 2 and tempInput1[1] == "PM":
-        hour += lookupConst["hourHalfDay"]
+    splitTimeFormat = timeInput.split()
+    hour, minute = (int(x) for x in splitTimeFormat[0].split(":"))
+    if len(splitTimeFormat) == 2 :
+        if splitTimeFormat[1] == "PM":
+            hour += lookupConst["hourHalfDay"]
+        if splitTimeFormat[1] == "AM" and hour == 12:
+            hour = 0
     if day:
         hour += lookupDay[day.lower()] * lookupConst["hourPerDay"]
     return hour * lookupConst["minPerHour"] + minute
@@ -92,7 +95,7 @@ def find_newDay(minuteTotal):
 
 # print('add_time("3:30 PM", "2:12"):', add_time("3:30 PM", "2:12"))
 # print('add_time("3:30 PM", "2:12", "Monday"):', add_time("3:30 PM", "2:12", "Monday"))
-test = "12:05 AM", "00:05", "Wednesday"
+test = "12:05 AM", "00:55", "sUnDAy"
 
 print(f"{test} add: \n{add_time(*test)}")
 
