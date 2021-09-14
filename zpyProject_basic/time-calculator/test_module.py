@@ -63,6 +63,11 @@ class UnitTests(unittest.TestCase):
         actual = add_time("8:16 PM", "466:02", "tuesday")
         expected = "6:18 AM, Monday (20 days later)"
         self.assertEqual(actual, expected, 'Expected calling "add_time()" with "8:16 PM", "466:02", "tuesday" to return "6:18 AM, Monday (20 days later)"')
+# my own test Case:
+    def test_special_start_time(self):
+        actual = add_time("12:05 AM", "00:55", "sunDAy")
+        expected = "01:00 AM, Sunday"
+        self.assertEqual(actual, expected, 'Expected calling "add_time()" with "12:05 AM", "00:55", "sunDAy" to return "01:00 AM, sunDAy"')
 
 if __name__ == "__main__":
     unittest.main()
