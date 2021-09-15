@@ -1,0 +1,4 @@
+﻿danh sách    =>  dùng hàm để thay đổi   =>   danh sách khác
+
+
+danh sách    =>  dùng hàm để thực hiện   =>   giá trị

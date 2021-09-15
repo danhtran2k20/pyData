@@ -1,0 +1,7 @@
+﻿.json  =>  list & dict
+
+
+Xây dựng hàm tính phương trình bậc 1
+
+dtb >= 5  =>  đậu
+dtb < 5  =>  rớt

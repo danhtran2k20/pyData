@@ -1,0 +1,4 @@
+﻿tu_dien = {"man": ["đàn ông"], "woman": ["đàn bà", "phụ nữ"],
+           "house": ["nhà", "ngôi nhà", "căn nhà"], "sun": ["mặt trời"],
+           "moon": ["mặt trăng"], "earth": ["trái đất", "quả đất", "địa cầu"],
+           "mountain": ["núi", "ngọn núi"]}

@@ -1,0 +1,50 @@
+﻿* Hướng dẫn cài đặt
+Windows:
+Python: https://youtu.be/X_PbBR345Zc
+VSCode: https://youtu.be/1PMo-KLG_XU
+
+MacOS:
+Python: https://youtu.be/7znraNl6cbI
+VSCode: https://youtu.be/fIPfM6Jj0vc
+
+
+http://portal.t3h.vn/
+
+
+https://classroom.google.com/
+lm5saa6
+
+
+32 bit (x86) / 64 bit (x64)
+
+
+https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe
+
+
+Kiểm tra phiên bản python
+- Mở ứng dụng cmd.exe
+- Gõ lệnh: python -V hoặc python --version
+
+
+python3 -V hoặc python3 --version
+
+
+
+
+=== CÀI ĐẶT JUPYTER NOTEBOOK ===
+B1: Mở cửa số cmd.exe (Quyền admin => Run as administrator)
+B2: gõ lệnh:
+Windows: pip install jupyter
+Mac: pip3 install jupyter
+B3: Tạo thư mục chứa Dữ liệu juyter
+B4: Tại thư mục hiện hành, click chọn đường dẫn, gõ đè lên đường dẫn từ khóa cmd => enter 
+=> Xuất hiện cửa sổ cmd với đường dẫn tương ứng
+B5: tại cửa sổ cmd, gõ tiếp lệnh jupyter notebook => enter
+
+
+
+
+
+
+
+

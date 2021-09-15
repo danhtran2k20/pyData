@@ -1,0 +1,23 @@
+﻿r (read): đọc
+w (write): ghi (đè)
+a (append): ghi (tiếp theo)
+
+
+Nguyễn văn A
+Trần thị C
+
+
+chuoi.title()
+
+
+list_1 = [1, 2, 3, 4, 5]
+
+list_1[1] = 200
+
+
+ten_list[index] = giá trị mới (cập nhật phần tử trong list)
+
+
+
+# Trước khi ghi dữ liệu sang file csv khác, cần chuyển dữ liệu về dạng:
+[[], [], [], []]

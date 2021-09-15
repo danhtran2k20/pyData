@@ -1,0 +1,23 @@
+﻿Buoi_11 (thư mục gốc)
+|
+|
+--- thu_muc_cha  (thư mục)
+|    |
+|    |
+|    --- module_cha.py  (tập tin python => xây dựng các hàm)
+|    |
+|    |
+|    --- thu_muc_con  (thư mục)
+|         |
+|         |
+|         --- module_con.py  (tập tin python => xây dựng các hàm)
+|
+|
+-- Demo Package.ipynb  (file làm việc)
+
+
+
+
+
+
+gia_tri.isdigit()   =>  gia_tri là str
