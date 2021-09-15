@@ -18,38 +18,41 @@ def turtleFracLine(turtle, order, size):
 # input, change only inside this
 inputFractal = {
     # polygon size and degree
-    "size": 200,
-    "polygonSide": 5,
+    "radiusPolygon": 250,
+    "polygonSide": 3,
     # Fractal input
-    "order": 6,
+    "order": 1,
     "direction": "down",
-    "ratioFracLine": 2,  # s2 = s1 * ratioFracLine
-    "alpha": 75,
+    "ratio_line": 2/3,
+    "alpha": 60,
     # animation on or off
+    "circleDraw": True,
     "animation": False,
-    "animationSpeed": 0,
+    "animationSpeed": 1,
 }
 print("inputFractal:", inputFractal)
 # Unpacking dict to var name by key
 inputName = [
-    "size",
+    "radiusPolygon",
     "polygonSide",
     "order",
     "direction",
-    "ratioFracLine",
+    "ratio_line",
     "alpha",
     "animation",
     "animationSpeed",
+    "circleDraw",
 ]
 (
-    size,
+    radiusPolygon,
     polygonSide,
     order,
     direction,
-    ratioFracLine,
+    ratio_line,
     alpha,
     animation,
     animationSpeed,
+    circleDraw,
 ) = (inputFractal[i] for i in inputName)
 
 # angle for polygon
@@ -61,9 +64,10 @@ for i in range(polygonSide):
 polyTurtleAngle[polygonSide - 1] = 0
 
 # turtle start position base on polygon angle
-cos_polyAngle = math.cos(math.radians(polyAngle / 2))
-preMove = size / (2 * round(cos_polyAngle, 2))
-preAngle = 180 - polyAngle / 2
+half_polyAngle = polyAngle / 2
+cos_halfPolyAngle = math.cos(math.radians(half_polyAngle))
+size = 2 * radiusPolygon * cos_halfPolyAngle
+preMove = size / (2 * round(cos_halfPolyAngle, 2))
 # angle for fractal
 rotateLineAngle = [alpha, -2 * alpha, alpha, 0]
 if direction.lower() == "down":
@@ -73,20 +77,23 @@ if direction.lower() == "down":
 # calculate ratio for turtle move
 # s1 + prj_s2     = size /2
 # s1 + s2*cos_a   = s/2
-# s1 + s1*cos_a*k = s/2
+# s1 + s1*cos_a*r = s/2
 # k = (1 + r*cos_a)
 # s1  = s /(2k)
 # s2 = rs1 = s *(r/(2k))
+# ratio_line = 1 / (2 * temp_ratio)
 
 cos_alpha = math.cos(math.radians(alpha))
-temp_ratio = 1 + round(ratioFracLine * cos_alpha, 2)
-ratio_line = 1 / (2 * temp_ratio)
-ratio_frac = ratioFracLine * ratio_line
+ratio_line /= 2
+temp_ratio = 1 / 2 - ratio_line
+ratio_frac = temp_ratio / (round(cos_alpha, 4))
+print("ratio_frac:", ratio_frac)
 
 # Setup interface
 myWin = turtle.Screen()
 if not animation:
     alex = turtle.Turtle(visible=False)
+    myWin.tracer(False)
 else:
     alex = turtle.Turtle()
     alex.speed(animationSpeed)
@@ -94,13 +101,20 @@ else:
 # pre position for center polygon
 alex.stamp()
 alex.penup()
-alex.right(preAngle)
-alex.forward(preMove)
-alex.left(preAngle)
+if circleDraw:
+    alex.forward(radiusPolygon)
+    alex.left(90)
+    alex.pendown()
+    alex.circle(radiusPolygon)
+    alex.penup()
+    alex.left(-90)
+    alex.backward(radiusPolygon)
+alex.left(half_polyAngle)
+alex.backward(preMove)
+alex.left(-half_polyAngle)
 alex.pendown()
 alex.stamp()
-if not animation:
-    myWin.tracer(False)
+
 for angle in polyTurtleAngle:
     turtleFracLine(alex, order, size)
     alex.left(angle)
