@@ -89,10 +89,12 @@ def create_chart_column(categories):
     for index in range(0, 11, 1):
         chart_display += (
             f"{(10-index) * 10 :>3}| "
-            f"{column_categories[0][index]}  "
-            f"{column_categories[1][index]}  "
-            f"{column_categories[2][index]}  \n"
+            + "".join(f"{column[index]}  " for column in column_categories)
+            + "\n"
         )
+        # for column in column_categories:
+        #     chart_display += f"{column[index]}  "
+        # chart_display += "\n"
     return chart_display
 
 
@@ -104,7 +106,7 @@ def total_withdraw(category):
 
 food = Category("Food")
 entertainment = Category("Entertainment")
-business = Category("Business")
+# business = Category("Business")
 # food.deposit(900, "deposit")
 # food.withdraw(45.67, "milk, cereal, eggs, bacon, bread")
 # food.transfer(20, entertainment)
@@ -162,13 +164,13 @@ expectedStr = (
 
 food.deposit(900, "deposit")
 entertainment.deposit(900, "deposit")
-business.deposit(900, "deposit")
+# business.deposit(900, "deposit")
 food.withdraw(105.55)
 entertainment.withdraw(33.40)
-business.withdraw(10.99)
+# business.withdraw(10.99)
 
 # ================================================
-chart_input = [business, food, entertainment]
+chart_input = [food, entertainment]
 chart_created = create_spend_chart(chart_input)
 # ================================================
 print("chart_created:\n" + chart_created)
