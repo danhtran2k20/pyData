@@ -16,6 +16,10 @@ class UnitTests(unittest.TestCase):
     
     def test_calculate_with_few_digits(self):
         self.assertRaisesRegex(ValueError, "List must contain nine numbers.", mean_var_std.calculate, [2,6,2,8,4,0,1,])
+    # my test case 
+    # cannot use isNumeric because 1.2 , "-2" 
+    # def test_calculate_with_non_digits(self):
+    #     self.assertRaisesRegex(TypeError, "List must contain numbers only.", mean_var_std.calculate, ["zero",6,2,8,4,0,1,])
 
 if __name__ == "__main__":
     unittest.main()
