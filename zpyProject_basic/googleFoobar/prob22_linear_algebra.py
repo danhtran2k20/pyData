@@ -26,7 +26,7 @@ from unittest import main
 # ===================================
 import numpy as np
 from fractions import Fraction
-
+import sympy as simp
 
 def solution(pegs):
     pegLen = len(pegs)
@@ -49,10 +49,11 @@ def solution(pegs):
         arrGear_ext_temp[:, i] = arrGear_ext
         # Ở đây ẩu round luôn kết quả vì numpy là numeric float tính ra lẻ
         # Dựa vào tính chất của ma trận toàn bộ số nguyên thì det sẽ là số nguyên
-        # -> Dùng sympy luôn cho nhanh
+        # -> Dùng sympy luôn cho nhanh, khỏi set công thức tay
+        # Cũng có thể convert ma trận từ đầu chỉ bao gồm dạng Fraction
         arrResult.append(Fraction(round(np.linalg.det(arrGear_ext_temp))) / arrGear_det)
 
-    # print(arrResult)
+    print(arrResult)
     result = [arrResult[0].numerator, arrResult[0].denominator]
     # print('temp res: ',result)
     # for gearItem in arrResult:
@@ -62,27 +63,30 @@ def solution(pegs):
     #         result = [-1, -1]
     #         break
     if any(
-        (gearItem.numerator < 0 or gearItem.numerator < gearItem.denominator)
+        (gearItem.numerator < 1 or gearItem.numerator < gearItem.denominator)
         for gearItem in arrResult
     ):
+        print('invalid')
         result = [-1, -1]
 
+    # Hiển nhiên numerator sẽ là số nguyên nên < 1 thì 0 và giá trị âm sẽ loại
     print(result)
-    return (
-        [-1, -1]
-        if any(
-            (gearItem.numerator < 0 or gearItem.numerator < gearItem.denominator)
-            for gearItem in arrResult
-        )
-        else [arrResult[0].numerator, arrResult[0].denominator]
-    )
+    return result
+    # return (
+    #     [-1, -1]
+    #     if any(
+    #         (gearItem.numerator < 1 or gearItem.numerator < gearItem.denominator)
+    #         for gearItem in arrResult
+    #     )
+    #     else [arrResult[0].numerator, arrResult[0].denominator]
+    # )
 
 
-# solution([4, 17, 50])
+solution([5754,5756])
 
 # ==============================
 # Autotest
-main(module='test_prob22_linear_algebra', exit=False)
+# main(module='test_prob22_linear_algebra', exit=False)
 
 # ==============================
 # https://stackoverflow.com/questions/40465866/google-foobar-gearing-up-for-destruction
